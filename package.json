@@ -1,0 +1,45 @@
+{
+  "name": "pytest-breadcrumbs",
+  "displayName": "pytest Breadcrumbs",
+  "description": "Copy the pytest node ID (tests/test_x.py::TestClass::test_func) of the function or class under the cursor.",
+  "version": "0.1.0",
+  "publisher": "ShahafChen",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/ShahafChen/vscode-pytest-breadcrumbs" },
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Testing", "Other"],
+  "keywords": ["python", "pytest", "node id", "breadcrumbs", "copy"],
+  "main": "./extension.js",
+  "activationEvents": [],
+  "contributes": {
+    "commands": [
+      { "command": "pytestBreadcrumbs.copy", "title": "Copy pytest Node ID", "category": "pytest" }
+    ],
+    "menus": {
+      "editor/context": [
+        { "command": "pytestBreadcrumbs.copy", "when": "editorLangId == python", "group": "9_cutcopypaste@99" }
+      ],
+      "commandPalette": [
+        { "command": "pytestBreadcrumbs.copy", "when": "editorLangId == python" }
+      ]
+    },
+    "keybindings": [
+      { "command": "pytestBreadcrumbs.copy", "key": "ctrl+alt+c", "mac": "cmd+alt+c", "when": "editorTextFocus && editorLangId == python" }
+    ],
+    "configuration": {
+      "title": "pytest Breadcrumbs",
+      "properties": {
+        "pytestBreadcrumbs.rootMarkers": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": ["pytest.ini", "pyproject.toml", "tox.ini", "setup.cfg", ".git"],
+          "description": "The node ID path is made relative to the nearest ancestor directory (up to the workspace folder) containing one of these entries. Falls back to the workspace folder."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "package": "npx --yes @vscode/vsce package"
+  }
+}
